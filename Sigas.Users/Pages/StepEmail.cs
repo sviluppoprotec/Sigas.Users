@@ -7,11 +7,11 @@ using Sigas.Api.Models;
 
 namespace Sigas.Users.Pages
 {
-    public partial class StepEmailX
+    public partial class StepEmailHandler
     {
         private readonly IHttpClientFactory clientFactory;
 
-        public StepEmailX(IHttpClientFactory clientFactory)
+        public StepEmailHandler(IHttpClientFactory clientFactory)
         {
             this.clientFactory = clientFactory;
         }
