@@ -6,8 +6,15 @@ namespace Sigas.User.Pages
     public partial class StepPassword
     {
         public async Task<bool> SavePassword(string password, string token) {
-            var request = new HttpRequestMessage(HttpMethod.Get,
-            $"http://api-sigas-update.protecsrl.biz/api/Utenti/{password}");
+            var request = new HttpRequestMessage(HttpMethod.Post,
+            $"http://api-sigas-update.protecsrl.biz/api/Utenti/CheckToken/");
+
+            var data = new Sigas.Api.Models.Responses.ChengePasswordRequest() {
+                 NewPassword = password,
+                 Token = token
+            };
+
+            request.Content = JsonContent.Create(data);
 
             var client = ClientFactory.CreateClient();
 

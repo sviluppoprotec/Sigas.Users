@@ -8,15 +8,21 @@
 <h4>Inserisci l'email'</h4>
 
 <div class="container">
-    <div class="row align-items-start">
+    <div class="row align-items-start" hidden="@Sent">
         <div class="col-12 col-sm-12 col-md-3 col-lg-3">
             Email
         </div>
         <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-            <input type="text" name="email" id="email" @bind="email"/>
+            <input type="text" name="email" id="email" class="text-box" @bind="email" />
         </div>
         <div class="col-12 col-sm-12 col-md-3 col-lg-3">
             <button type="button" @onclick="SendEmail">Invia</button>
+        </div>
+    </div>
+
+    <div class="row align-items-start" hidden="!@Sent">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+            Abbiamo inviato un email a @email con il link per impostare la nuova password
         </div>
     </div>
 </div>
@@ -24,6 +30,7 @@
 @code {
 
     public string email { get; set; } = string.Empty;
+    public bool Sent { get; set; } = false;
     private async void SendEmail()
     {
         var stepEmail = new StepEmailHandler(ClientFactory);
@@ -31,9 +38,9 @@
 
         if (mailOk)
         {
-            // invia l'email
+            Sent = true;
         }
 
-        NavManager.NavigateTo("/");
+        // NavManager.NavigateTo("/");
     }
 }
