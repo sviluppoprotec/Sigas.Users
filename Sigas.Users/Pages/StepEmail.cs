@@ -10,16 +10,18 @@ namespace Sigas.Users.Pages
     public partial class StepEmailHandler
     {
         private readonly IHttpClientFactory clientFactory;
+        private readonly IConfiguration configuration;
 
-        public StepEmailHandler(IHttpClientFactory clientFactory)
+        public StepEmailHandler(IHttpClientFactory clientFactory, IConfiguration configuration)
         {
             this.clientFactory = clientFactory;
+            this.configuration = configuration;
         }
 
         public async Task<bool> SendEmail2(string email)
         {
             var request = new HttpRequestMessage(HttpMethod.Get,
-            $"http://api-sigas-update.protecsrl.biz/api/Utenti/{email}");
+            $"{configuration["Configuration:ApiUrl"]}Utenti/{System.Net.WebUtility.UrlEncode(email)}");
 
             var client = clientFactory.CreateClient();
 

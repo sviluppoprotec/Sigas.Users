@@ -3,6 +3,7 @@
 @inherits Sigas.Users.Classes.SigasBasePage
 @inject IHttpClientFactory ClientFactory
 @inject NavigationManager NavManager
+@inject IConfiguration configuration;
 
 <h3>Recupero password</h3>
 <h4>Inserisci l'email'</h4>
@@ -33,7 +34,7 @@
     public bool Sent { get; set; } = false;
     private async void SendEmail()
     {
-        var stepEmail = new StepEmailHandler(ClientFactory);
+        var stepEmail = new StepEmailHandler(ClientFactory, configuration);
         var mailOk = await stepEmail.SendEmail2(email);
 
         if (mailOk)

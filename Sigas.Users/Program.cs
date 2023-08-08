@@ -13,7 +13,9 @@ builder.Services.AddDevExpressBlazor(options => {
     options.SizeMode = DevExpress.Blazor.SizeMode.Medium;
 });
 builder.Services.AddHttpClient();
-builder.Services.AddSingleton<WeatherForecastService>();
+
+builder.Services.Configure<Sigas.User.Classes.Configuration>(
+    builder.Configuration.GetSection(Sigas.User.Classes.Configuration.Position));
 builder.WebHost.UseWebRoot("wwwroot");
 builder.WebHost.UseStaticWebAssets();
 
