@@ -20,8 +20,8 @@ namespace Sigas.Users.Pages
 
         public async Task<bool> SendEmail2(string email)
         {
-            var request = new HttpRequestMessage(HttpMethod.Get,
-            $"{configuration["Configuration:ApiUrl"]}Utenti/{System.Net.WebUtility.UrlEncode(email)}");
+            var request = new HttpRequestMessage(HttpMethod.Post,
+            $"{configuration["Configuration:ApiUrl"]}Utenti/SetToken/{System.Net.WebUtility.UrlEncode(email)}");
 
             var client = clientFactory.CreateClient();
 

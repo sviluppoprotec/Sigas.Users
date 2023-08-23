@@ -21,17 +21,31 @@
         </div>
     </div>
 
-    <div class="row align-items-start" hidden="!@Sent">
-        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-            Abbiamo inviato un email a @email con il link per impostare la nuova password
+    @if (Sent)
+    {
+        <div class="row align-items-start">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                Abbiamo inviato un email a @email con il link per impostare la nuova password
+            </div>
         </div>
-    </div>
+
+    }
+
+    @if (Error)
+    {
+        <div class="row align-items-start">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                Errore nell'operazione'
+            </div>
+        </div>
+    }
 </div>
 
 @code {
 
     public string email { get; set; } = string.Empty;
     public bool Sent { get; set; } = false;
+    public bool Error { get; set; } = false;
     private async void SendEmail()
     {
         var stepEmail = new StepEmailHandler(ClientFactory, configuration);
@@ -40,6 +54,10 @@
         if (mailOk)
         {
             Sent = true;
+        }
+        else
+        {
+            Error = true;
         }
 
         // NavManager.NavigateTo("/");

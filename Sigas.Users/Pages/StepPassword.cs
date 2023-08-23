@@ -7,7 +7,7 @@ namespace Sigas.User.Pages
     {
         public async Task<bool> SavePassword(string password, string token) {
             var request = new HttpRequestMessage(HttpMethod.Post,
-            $"http://api-sigas-update.protecsrl.biz/api/Utenti/CheckToken/");
+                        $"{configuration["Configuration:ApiUrl"]}Utenti/CheckToken/");
 
             var data = new Sigas.Api.Models.Responses.ChengePasswordRequest() {
                  NewPassword = password,
