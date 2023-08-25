@@ -11,13 +11,13 @@
 <div class="container">
     <div class="row align-items-start" hidden="@Sent">
         <div class="col-12 col-sm-12 col-md-3 col-lg-3">
-            Email
+            Nome utente
         </div>
         <div class="col-12 col-sm-12 col-md-6 col-lg-6">
             <input type="text" name="email" id="email" class="text-box" @bind="email" />
         </div>
         <div class="col-12 col-sm-12 col-md-3 col-lg-3">
-            <button type="button" @onclick="SendEmail">Invia</button>
+            <button type="button" disabled="@Sending" @onclick="SendEmail">Invia</button>
         </div>
     </div>
 
@@ -29,7 +29,7 @@
 
     <div class="row align-items-start" hidden="@(!Error)">
       <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-            Errore nell'operazione
+            Nome utente inesistente o errore nell'operazione
       </div>
    </div>
 </div>
@@ -42,13 +42,19 @@
     public bool Sent { get; set; } = false;
     [Parameter]
     public bool Error { get; set; } = false;
+
+    [Parameter]
+    public bool Sending { get; set; } = false;
+
     private async void SendEmail()
     {
 
         //await Task.Delay(1);
         var stepEmail = new StepEmailHandler(ClientFactory, configuration);
+        Sending = true;
         Sent = await stepEmail.SendEmailAsync(email);
         Error = !Sent;
+        Sending = false;
         // Call StateHasChanged to trigger a re-render of the page
         await InvokeAsync(StateHasChanged);
 
