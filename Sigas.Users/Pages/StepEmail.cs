@@ -18,7 +18,7 @@ namespace Sigas.Users.Pages
             this.configuration = configuration;
         }
 
-        public async Task<bool> SendEmail2(string email)
+        public async Task<bool> SendEmailAsync(string email)
         {
             var request = new HttpRequestMessage(HttpMethod.Post,
             $"{configuration["Configuration:ApiUrl"]}Utenti/SetToken/{System.Net.WebUtility.UrlEncode(email)}");

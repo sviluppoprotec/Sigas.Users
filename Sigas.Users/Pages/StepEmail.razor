@@ -21,45 +21,54 @@
         </div>
     </div>
 
-    @if (Sent)
-    {
-        <div class="row align-items-start">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                Abbiamo inviato un email a @email con il link per impostare la nuova password
-            </div>
-        </div>
+    <div class="row align-items-start" hidden="@(!Sent)">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+            Abbiamo inviato un email a @email con il link per impostare la nuova password
+      </div>
+   </div>
 
-    }
-
-    @if (Error)
-    {
-        <div class="row align-items-start">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                Errore nell'operazione'
-            </div>
-        </div>
-    }
+    <div class="row align-items-start" hidden="@(!Error)">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+            Errore nell'operazione
+      </div>
+   </div>
 </div>
 
 @code {
 
     public string email { get; set; } = string.Empty;
+    public string message { get; set; } = string.Empty;
+    [Parameter]
     public bool Sent { get; set; } = false;
+    [Parameter]
     public bool Error { get; set; } = false;
     private async void SendEmail()
     {
+
+        //await Task.Delay(1);
         var stepEmail = new StepEmailHandler(ClientFactory, configuration);
-        var mailOk = await stepEmail.SendEmail2(email);
+        Sent = await stepEmail.SendEmailAsync(email);
+        Error = !Sent;
+        // Call StateHasChanged to trigger a re-render of the page
+        await InvokeAsync(StateHasChanged);
 
-        if (mailOk)
-        {
-            Sent = true;
-        }
-        else
-        {
-            Error = true;
-        }
-
-        // NavManager.NavigateTo("/");
     }
+
+
+    //public override async Task SetParametersAsync(ParameterView parameters)
+    //{
+    //    if (parameters.TryGetValue<bool>(nameof(Sent), out var value))
+    //    {
+    //        if (value)
+    //        {
+    //            message = "The value of 'Param' is null.";
+    //        }
+    //        else
+    //        {
+    //            message = $"The value of 'Param' is {value}.";
+    //        }
+    //    }
+
+    //    await base.SetParametersAsync(parameters);
+    //}
 }

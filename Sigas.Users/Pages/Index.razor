@@ -4,4 +4,18 @@
 <p class="pb-2 mw-1100">
     Funzionalità per gli utenti sigas
 </p>
+<p hidden="@(!clicked)">
+   cliccato
+</p>
+<button type="button" @onclick="ClickedHandler">click</button>
 
+
+@code {
+
+    public bool clicked { get; set; } = false;
+    private void ClickedHandler()
+    {
+        // await Task.Run(() => { Console.WriteLine("Task ran"); }); 
+        clicked = !clicked;
+    }
+}
